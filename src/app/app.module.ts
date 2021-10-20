@@ -14,11 +14,11 @@ import { ShoppingListComponent } from './components/ShoppingList/shopping-list/s
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
     RecipesComponent,
     RecipeListComponent,
     RecipeItemComponent,
     RecipeDetailComponent,
-    HeaderComponent,
     ShoppingEditComponent,
     ShoppingListComponent
   ],
