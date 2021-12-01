@@ -7,7 +7,12 @@
                 we got rid of the href element 
                 will later use this like a button would lead to unwanted behaviors 
             -->
-            <a class="list-group-item" style="cursor: pointer;"></a>
+            <a  
+                class="list-group-item" 
+                style="cursor: pointer;"
+                *ngFor="let ingredient of ingredients"
+            >{{ ingredient.name }}  ({{ ingredient.amount }})
+        </a>
         </ul>
     </div>
 </div>
