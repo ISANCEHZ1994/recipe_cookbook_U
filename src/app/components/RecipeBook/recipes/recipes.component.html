@@ -3,12 +3,22 @@
 
     <!-- small column on the left => here is our Recipe List Component -->
     <div class="col-md-5">
-        <app-recipe-list></app-recipe-list>
+        <app-recipe-list
+            (recipeThatWasSelected)="selectedRecipe = $event"
+        ></app-recipe-list>
     </div>
 
-    <!-- broader column on the right => here is our Recipe Detail Component -->
+    <!-- broader column on the right => here is our Recipe Detail Component -->    
     <div class="col-md-7">
-        <app-recipe-detail></app-recipe-detail>
+        <!-- now that information is passed to the recipe-details component we can use it there! -->
+        <app-recipe-detail
+            *ngIf="selectedRecipe; else infoText"
+            [recipe]="selectedRecipe"
+        ></app-recipe-detail>
+        <!-- REMEMBER: we can use [recipe] because of the recipe-detail.ts file! -->
+        <ng-template #infoText>
+            <h1>Please Select a Recipe!</h1>
+        </ng-template>
     </div>
 
 </div>

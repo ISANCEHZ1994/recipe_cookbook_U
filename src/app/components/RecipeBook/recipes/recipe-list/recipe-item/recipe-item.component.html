@@ -1,1 +1,26 @@
-<p>recipe-item works!</p>
+<a 
+    href="#" 
+    class="list-group-item clearfix"
+    (click)="onSelected()"
+>   
+<!-- NOTE: the *ngFor above! -->
+    <div class="pull-left">
+        <!-- inital solution: 
+        {{ recipes[0].name }},
+        {{ recipes[0].description }}
+        {{ recipes[0].imagePath }}
+        works but HARD CODING => changed to DYNAMIC -->
+        <h4 class="list-group-item-heading">Recipe Name: {{ recipe.name }}</h4> <!-- dynamic data here -->
+        <p class="list-group-item-text">Description: {{ recipe.description }}</p>  <!-- dynamic data here -->
+    </div>
+    <span class="pull-right">
+        <img 
+          [src]="recipe.imagePath"
+          alt="{{ recipe.name }}" 
+          class="img-responsive" 
+          style="max-height: 50px;"
+        >  
+        <!-- with the brackets we can use property binding and no longer need the curly bars -->
+        <!-- src="{{ recipe.imagePath }}" OR [src]="recipe.imagePath" either would work -->
+    </span>
+</a>
