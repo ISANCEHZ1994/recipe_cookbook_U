@@ -12,9 +12,9 @@
         <!-- Using the tag below to do the work now -->
         <!-- See how both components have variables to recieve and send data to each other -->
         <app-recipe-item
-          *ngFor= "let recipeEl of recipes"
-          [recipe]= "recipeEl"
-           
+          *ngFor= "let recipeEl of recipes; let i = index"
+          [recipe]="recipeEl"
+          [index]="i"
         ></app-recipe-item> 
         <!-- (recipeSelected)="onRecipeSelected(recipeEl)" was previously inside of item tag -->
     </div>

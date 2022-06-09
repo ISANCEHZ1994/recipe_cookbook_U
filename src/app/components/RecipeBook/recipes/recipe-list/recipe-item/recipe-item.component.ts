@@ -9,7 +9,9 @@ import { RecipeService } from '../../recipe.service';
 })
 export class RecipeItemComponent implements OnInit {
 
+  // remember we are using this component inside of the recipe-LIST HTML
   @Input() recipe: Recipe;
+  @Input() index: number;
 
   // replaced/moved to recipe.service.ts!
   // @Output() recipeSelected = new EventEmitter<void>();
