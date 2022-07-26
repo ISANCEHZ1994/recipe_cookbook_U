@@ -14,7 +14,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   // recommended practice to store subscription in property => igChangeSub
   private igChangeSub: Subscription;
 
-  constructor( private slService: ShoppingListService ) { };
+  constructor( private slService: ShoppingListService ) {};
 
   ngOnInit(): void {
     this.ingredients = this.slService.getIngredients();
@@ -25,7 +25,12 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
       ( ingredients: Ingredient[] ) => {
         this.ingredients = ingredients;
       }
-    );    
+    );
+  };
+
+  // related to the startedEditing variable inside of the shopping-list.service
+  onEditItem(index: number){
+    this.slService.startedEditing.next(index);
   };
 
   ngOnDestroy(): void {

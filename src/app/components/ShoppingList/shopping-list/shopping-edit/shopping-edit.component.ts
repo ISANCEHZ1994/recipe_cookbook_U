@@ -1,6 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { 
+  Component, 
+  OnInit, 
+  ViewChild, 
+  ElementRef, 
+  OnDestroy 
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Ingredient } from 'app/components/Shared/ingredient.model';
+import { Subscription } from 'rxjs';
 import { ShoppingListService } from '../shopping-list.service';
 
 @Component({
@@ -19,9 +26,27 @@ export class ShoppingEditComponent implements OnInit {
   // @Output() ingredientAdded = new EventEmitter< Ingredient >();
   // Output so that we can listen/see it from outside - going to ShoppingListCompoHTML
 
+  subscription: Subscription;
+  editMode = false;
+  editedItemIndex: number;
+  editedItem: Ingredient;
+  // using information from shopping-edit.component.html
+  @ViewChild('f', { static: false }) slForm: NgForm;
+
   constructor( private slService: ShoppingListService ) { };
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.slService.startedEditing.subscribe(
+        ( index: number ) => {
+          this.editedItemIndex = index;
+          this.editMode = true;
+          this.editedItem = this.slService.getIngredient(index); 
+          this.slForm.setValue({
+            name:   this.editedItem.name,
+            amount: this.editedItem.amount
+          })
+        }
+    );
   };
 
   onAddItem(form: NgForm){
