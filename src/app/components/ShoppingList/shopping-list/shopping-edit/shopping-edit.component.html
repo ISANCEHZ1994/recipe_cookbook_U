@@ -6,30 +6,41 @@
                 <div class="col-sm-5 form-group">
                     <label for="name">Item Name</label>
                     <input 
-                    type="text" 
-                    id="name" 
-                    class="form-control"
-                    name="name"
-                    ngModel
+                        type="text" 
+                        id="name" 
+                        class="form-control"
+                        name="name"
+                        ngModel
+                        required
                     >          
                     <!-- #nameInput -->
                 </div>
                 <div class="col-sm-2 form-group">
                     <label for="amount">Item Amount</label>
                     <input 
-                    type="number" 
-                    id="amount" 
-                    class="form-control"
-                    name="amount"
-                    ngModel
+                        type="number" 
+                        id="amount" 
+                        class="form-control"
+                        name="amount"
+                        ngModel
+                        required
+                        pattern="^[1-9]+[0-9]*$"
                     >
                     <!-- #amountInput -->
+                    <!-- Validation pattern: used above so that the input does not 
+                        allow specific characters ONLY POSITIVE numbers -->
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <button class="btn btn-success" type="submit">Add</button>
-                    <button class="btn btn-danger" type="button">Delete</button>
+                    <button 
+                        class="btn btn-success" 
+                        type="submit" 
+                        [disabled]="!f.valid"
+                    >
+                        Add
+                    </button>
+                    <button class="btn btn-danger"  type="button">Delete</button>
                     <button class="btn btn-primary" type="button">Clear</button>
                 </div>
             </div>
