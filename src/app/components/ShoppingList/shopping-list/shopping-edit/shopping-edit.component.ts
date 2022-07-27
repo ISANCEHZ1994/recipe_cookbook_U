@@ -14,7 +14,7 @@ import { ShoppingListService } from '../shopping-list.service';
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html'
 })
-export class ShoppingEditComponent implements OnInit {
+export class ShoppingEditComponent implements OnInit, OnDestroy {
   // we pass in the name of the local reference..look inside the HTML file for the INPUT
   // UPDATE: we are now switching to TD forms! thus we no longer need below!
   // @ViewChild('nameInput') nameInputRef: ElementRef;
@@ -29,6 +29,7 @@ export class ShoppingEditComponent implements OnInit {
   subscription: Subscription;
   editMode = false;
   editedItemIndex: number;
+  // remember that the item we are changing/editing is an Ingredient (model)
   editedItem: Ingredient;
   // using information from shopping-edit.component.html
   @ViewChild('f', { static: false }) slForm: NgForm;
@@ -41,6 +42,7 @@ export class ShoppingEditComponent implements OnInit {
           this.editedItemIndex = index;
           this.editMode = true;
           this.editedItem = this.slService.getIngredient(index); 
+
           this.slForm.setValue({
             name:   this.editedItem.name,
             amount: this.editedItem.amount
@@ -49,12 +51,18 @@ export class ShoppingEditComponent implements OnInit {
     );
   };
 
+  ngOnDestroy(): void {
+      this.subscription.unsubscribe();
+  };
+
   onAddItem(form: NgForm){
     // const ingredientName   = this.nameInputRef.nativeElement.value; // obtaining information from input
     // const ingredientAmount = this.amountInputRef.nativeElement.value; 
     // const newIngredient    = new Ingredient(ingredientName, ingredientAmount); // using information to create NEW ingredients
+    
+    // Switching to TD (Template-Driven) form so above is not needed anymore
     const value = form.value;
-    // we are getting the value from HTML file - switching to TD forms so know we make it simpiler
+    // we are getting the value.<VARIABLE> from HTML file
     const newIngredient = new Ingredient( value.name, value.amount ); 
     this.slService.addingIngredient( newIngredient ); 
   };

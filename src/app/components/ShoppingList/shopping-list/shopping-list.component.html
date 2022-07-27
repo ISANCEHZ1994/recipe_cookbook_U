@@ -2,8 +2,7 @@
     <div class="col-xs-10">
         <!-- Here is where we can add a new ingredient! -->
         <!-- Remember now that we have it passing thru we can use/implement it in the other component -->
-        <app-shopping-edit> 
-        </app-shopping-edit>
+        <app-shopping-edit></app-shopping-edit>
         <!-- (ingredientAdded)="onIngredientAdded($event)" -->
         <hr>
         <ul class="list-group">
@@ -14,8 +13,10 @@
             <a  
                 class="list-group-item" 
                 style="cursor: pointer;"
-                *ngFor="let ingredient of ingredients"
+                *ngFor="let ingredient of ingredients; let i = index"
+                (click)="onEditItem(i)"
             >
+            <!-- now when we click on an ingredient below we can now see it in the inputs and change the ammount or name -->
                 {{ ingredient.name }}  ({{ ingredient.amount }})
             </a>
         </ul>
