@@ -40,8 +40,22 @@
                     >
                         {{ editMode ? 'Update' : 'Add' }}
                     </button>
-                    <button class="btn btn-danger"  type="button" >Delete</button>
-                    <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
+                    <button 
+                        class="btn btn-danger"  
+                        type="button" 
+                        (click)="onDelete()"
+                        *ngIf="editMode"
+                    >
+                    <!-- *ngIf will cause this (delete) button to only appear when (specific) item is clicked -->
+                        Delete
+                    </button>
+                    <button 
+                        class="btn btn-primary" 
+                        type="button" 
+                        (click)="onClear()"
+                    >
+                        Clear
+                    </button>
                 </div>
             </div>
         </form>
