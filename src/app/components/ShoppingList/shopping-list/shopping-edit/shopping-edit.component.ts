@@ -46,7 +46,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
           this.slForm.setValue({
             name:   this.editedItem.name,
             amount: this.editedItem.amount
-          })
+          });
         }
     );
   };
@@ -64,7 +64,12 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     const value = form.value;
     // we are getting the value.<VARIABLE> from HTML file
     const newIngredient = new Ingredient( value.name, value.amount ); 
-    this.slService.addingIngredient( newIngredient ); 
+    if( this.editMode ) {
+      this.slService.updateIngredient( this.editedItemIndex, newIngredient );
+    } else {
+      this.slService.addIngredient( newIngredient );
+    }
+    
   };
 
 };

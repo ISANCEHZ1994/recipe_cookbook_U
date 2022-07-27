@@ -17,19 +17,24 @@ export class ShoppingListService{
         return this.ingredients.slice();
     };
 
-    getIngredient(index: number){
+    getIngredient( index: number ){
         return this.ingredients[index];
     };
 
-    addingIngredient(ingredientOrWhateverNameYouWant: Ingredient){
+    addIngredient( ingredientOrWhateverNameYouWant: Ingredient ){
         this.ingredients.push(ingredientOrWhateverNameYouWant);
         // since we changed to subject: emit becomes next
-        this.ingredientsChanged.next(this.ingredients.slice());
+        this.ingredientsChanged.next( this.ingredients.slice() );
     };
 
     addIngredients( ingredients: Ingredient[] ){
         this.ingredients.push(...ingredients);
-        this.ingredientsChanged.next(this.ingredients.slice());
-    }
+        this.ingredientsChanged.next( this.ingredients.slice() );
+    };
+
+    updateIngredient(index: number, newIngredient: Ingredient){
+        this.ingredients[index] = newIngredient;
+        this.ingredientsChanged.next(  this.ingredients.slice() );
+    };
 
 };
