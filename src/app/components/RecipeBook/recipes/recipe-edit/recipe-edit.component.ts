@@ -74,6 +74,16 @@ export class RecipeEditComponent implements OnInit {
     });
   }; // initForm CLOSE  
 
+  onAddIngredient(){
+    // we are explicityly casting it - basically enclosing the type we want to convert
+    (<FormArray>this.recipeForm.get('ingredients')).push(
+      new FormGroup({
+        'name'  : new FormControl(),
+        'amount': new FormControl()
+      })
+    )
+  };
+
   get controls() { // a getter!
     return ( <FormArray>this.recipeForm.get('ingredients') ).controls;
   }
