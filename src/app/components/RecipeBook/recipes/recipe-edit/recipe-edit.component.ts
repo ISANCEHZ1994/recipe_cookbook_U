@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 
 @Component({
@@ -17,10 +18,9 @@ export class RecipeEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService
-  ) { };
+  ) {};
 
-  ngOnInit(){
-    
+  ngOnInit(){    
     this.route.params.subscribe(
       ( params: Params ) => {
         // we are retriving the ID of whatever we are working on - the item/recipe
@@ -35,13 +35,27 @@ export class RecipeEditComponent implements OnInit {
   };
 
   onSubmit(){
-    console.log(this.recipeForm)
-  }
+    // console.log(this.recipeForm)
+
+    // NOTE: our model already has this set up so not needed but an alternative!
+    // const newRecipe = new Recipe(
+    //   this.recipeForm.value['name'], 
+    //   this.recipeForm.value['description'],
+    //   this.recipeForm.value['imagePath'],
+    //   this.recipeForm.value['ingredients']
+    // );
+
+    if( this.editMode ){
+      this.recipeService.updateRecipe( this.id, this.recipeForm.value );
+    } else {
+      this.recipeService.addRecipe( this.recipeForm.value );
+    }
+  };
 
   // Again: below is Reactive Form Templating
   private initForm(){    
-    let recipeName = '';
-    let recipeImagePath = '';
+    let recipeName        = '';
+    let recipeImagePath   = '';
     let recipeDescription = '';
     // recipeIngredients to create a NEW ingredient (name && amount)
     let recipeIngredients = new FormArray([]); // by default should be an empty array
@@ -68,34 +82,33 @@ export class RecipeEditComponent implements OnInit {
         }
       }
     };
-
     this.recipeForm = new FormGroup({
-      // the string should match the formControlName parameter of the inputs inside of the HTML
-      // note: we are also adding Validators to the mix to make sure we have the right datatype
-      'name'       : new FormControl(recipeName, Validators.required),
-      'imagePath'  : new FormControl(recipeImagePath, Validators.required),
-      'description': new FormControl(recipeDescription, Validators.required),
-      'ingredients': recipeIngredients // should be everything we just pushed to the default array
+        // the string should match the formControlName parameter of the inputs inside of the HTML
+        // note: we are also adding Validators to the mix to make sure we have the right datatype
+        'name'       : new FormControl(recipeName, Validators.required),
+        'imagePath'  : new FormControl(recipeImagePath, Validators.required),
+        'description': new FormControl(recipeDescription, Validators.required),
+        'ingredients': recipeIngredients // should be everything we just pushed to the default array
     });
   }; // initForm CLOSE  
 
   onAddIngredient(){
-    // we are explicityly casting it - basically enclosing the type we want to convert
-    (<FormArray>this.recipeForm.get('ingredients'))
-    .push(
-      new FormGroup({
-        // added Validators
-        'name'  : new FormControl( null, Validators.required ),
-        'amount': new FormControl( null, [
-              Validators.required,
-              Validators.pattern(/^[1-9]+[0-9]*$/)
-        ])
-      })
-    );
+      // we are explicityly casting it - basically enclosing the type we want to convert
+      (<FormArray>this.recipeForm.get('ingredients'))
+      .push(
+        new FormGroup({
+          // added Validators
+          'name'  : new FormControl( null, Validators.required ),
+          'amount': new FormControl( null, [
+                Validators.required,
+                Validators.pattern(/^[1-9]+[0-9]*$/)
+          ])
+        })
+      );
   };
 
   get controls() { // a getter!
-    return ( <FormArray>this.recipeForm.get('ingredients') ).controls;
-  }
+      return ( <FormArray>this.recipeForm.get('ingredients') ).controls;
+  };
 
 }; // RecipeEditComponent CLOSE

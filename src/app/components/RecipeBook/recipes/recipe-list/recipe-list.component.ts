@@ -20,12 +20,11 @@ export class RecipeListComponent implements OnInit {
   ) {};
 
   ngOnInit(): void {
+    this.recipeService.recipesChanged.subscribe(
+      
+    );
     this.recipes = this.recipeService.getRecipies();
   };
-
-  // onRecipeSelected(recipe: Recipe){
-  //   this.recipeThatWasSelected.emit(recipe);
-  // };
 
   onNewRecipe(){
     this.router.navigate(['new'], { relativeTo: this.route });
