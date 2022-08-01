@@ -12,7 +12,7 @@ export class RecipeEditComponent implements OnInit {
 
   id: number;
   editMode = false;
-  recipeFrom: FormGroup;
+  recipeForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,33 +20,43 @@ export class RecipeEditComponent implements OnInit {
   ) { };
 
   ngOnInit(){
+    
     this.route.params.subscribe(
       ( params: Params ) => {
-         this.id = +params['id'];
-         this.editMode = params['id'] != null;
-        //  console.log(this.editMode);
+        // we are retriving the ID of whatever we are working on - the item/ingredient
+        // remeber that the (+) plus converts into a number
+         this.id = +params['id']; // 'id' comes from the app-routing.module.ts because that is the name we have in our DYNAMIC parameter (:id)        
+         this.editMode = params['id'] != null; // we want to know whether we are creating a NEW ingredient or EDITING an already created one
+         // console.log(this.editMode);
+
+         // running function below to do all work for us!
+         this.initForm();        
       }
     )
   };
 
+  onSubmit(){
+    console.log(this.recipeForm)
+  }
+
   // Again: below is Reactive Form Templating
-  private initForm(){
-    
+  private initForm(){    
     let recipeName = '';
     let recipeImagePath = '';
     let recipeDescription = '';
 
     if( this.editMode ){
       const recipe = this.recipeService.getRecipe(this.id);
-      recipeName = recipe.name;
-      recipeImagePath = recipe.imagePath;
+      recipeName        = recipe.name;
+      recipeImagePath   = recipe.imagePath;
       recipeDescription = recipe.description;
     };
 
-    this.recipeFrom = new FormGroup({
-      'name': new FormControl(recipeName),
-      'imagePath': new FormControl(recipeImagePath),
-      'description': new FormControl(recipeDescription)
+    this.recipeForm = new FormGroup({
+      // the string should match the formControlName parameter of the inputs inside of the HTML
+      'name'        : new FormControl(recipeName),
+      'imagePath'   : new FormControl(recipeImagePath),
+      'description' : new FormControl(recipeDescription)
     });
   };
   
