@@ -6,8 +6,19 @@
             <!-- And now we can assign our own controls -->
             <div class="row">
                 <div class="col-xs-12">
-                    <button type="submit" class="btn btn-success">Save</button>
-                    <button type="button" class="btn btn-danger">Cancel</button>
+                    <button 
+                        type="submit" 
+                        class="btn btn-success"
+                        [disabled]="!recipeForm.valid"
+                    >
+                        Save
+                    </button>
+                    <button 
+                        type="button" 
+                        class="btn btn-danger"
+                    >
+                        Cancel
+                    </button>
                 </div>
             </div>
             <div class="row">
@@ -79,7 +90,7 @@
                             <input 
                                 type="number"
                                 class="form-control"
-                                formControlName="amount"
+                                formControlName="amount"                                
                             >  
                         </div>
                         <div class="col-xs-2">
