@@ -45,13 +45,17 @@
                             id="imagePath"
                             formControlName="imagePath"
                             class="form-control"
+                            #imagePath
                         >
+                        <!-- Note: before we could not see a preview image because we not binding the source
+                        now we added a local reference named imagePath to get access to the input INSIDE THIS template (BELOW) -->
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <img src="" class="img-responsive">
+                    <!-- BOOM binding the #imagePath reference to this img tag -->
+                    <img [src]="imagePath.value" class="img-responsive">
                 </div>
             </div>
             <div class="row">
