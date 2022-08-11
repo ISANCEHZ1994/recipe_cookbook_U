@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+
 import { Recipe } from "../RecipeBook/recipes/recipe.model";
 import { RecipeService } from "../RecipeBook/recipes/recipe.service";
 
@@ -27,11 +28,12 @@ export class DataStorageService {
 
     fetchRecipes(){
         this.http
-            .get(
+            .get<Recipe[]>(
                 'https://ng-course-recipe-book-e39b2-default-rtdb.firebaseio.com/recipes.json'
             )
             .subscribe( recipes => {
                 console.log(recipes);
+                this.recipeService.setRecipes( recipes ); // recipes - did not work because Angular/TypeScript needs to know the specific datatype passing thru
             });
     };
 
