@@ -18,4 +18,8 @@ export class HeaderComponent  {
       this.dataService.storeRecipes();
   };
 
+  onFetchData(){
+    this.dataService.fetchRecipes();
+  };
+
 };

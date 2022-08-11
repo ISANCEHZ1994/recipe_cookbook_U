@@ -15,16 +15,24 @@ export class DataStorageService {
 
     storeRecipes(){
         const recipes = this.recipeService.getRecipes();
-               this.http
-                   .put(
-                        'https://ng-course-recipe-book-e39b2-default-rtdb.firebaseio.com/recipes.json', 
-                        recipes
-                    )
-                    .subscribe(
-                        response => {
-                            console.log(response);
-                        }
-                    );
+        this.http
+            .put(
+                'https://ng-course-recipe-book-e39b2-default-rtdb.firebaseio.com/recipes.json', 
+                recipes
+            )
+            .subscribe( response => {
+                console.log(response);
+            });
+    };
+
+    fetchRecipes(){
+        this.http
+            .get(
+                'https://ng-course-recipe-book-e39b2-default-rtdb.firebaseio.com/recipes.json'
+            )
+            .subscribe( recipes => {
+                console.log(recipes);
+            });
     };
 
 };
