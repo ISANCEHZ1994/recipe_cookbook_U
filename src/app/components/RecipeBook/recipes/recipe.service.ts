@@ -11,26 +11,29 @@ export class RecipeService {
     recipeSelected = new Subject<Recipe>();
     recipesChanged = new Subject<Recipe[]>();
     
-    recipes: Recipe[] = [
-        new Recipe(
-          'Test Recipe', 
-          'This is simply a test', 
-          'https://m.media-amazon.com/images/I/61ign3tLtzL._AC_SX466_.jpg',
-          [
-            new Ingredient('Meat', 1),
-            new Ingredient('French Fries', 20)
-          ]
-        ),
-        new Recipe(
-          'Test Recipe2',
-          'This is simply a test2',
-          'https://m.media-amazon.com/images/I/61tAdAiR0zL._AC_SX425_.jpg',
-          [
-            new Ingredient('Buns', 2),
-            new Ingredient('Meat', 100)
-          ]
-        )
-    ];
+    // IN CASE: For dummy data
+    // recipes: Recipe[] = [
+    //     new Recipe(
+    //       'Test Recipe', 
+    //       'This is simply a test', 
+    //       'https://m.media-amazon.com/images/I/61ign3tLtzL._AC_SX466_.jpg',
+    //       [
+    //         new Ingredient('Meat', 1),
+    //         new Ingredient('French Fries', 20)
+    //       ]
+    //     ),
+    //     new Recipe(
+    //       'Test Recipe2',
+    //       'This is simply a test2',
+    //       'https://m.media-amazon.com/images/I/61tAdAiR0zL._AC_SX425_.jpg',
+    //       [
+    //         new Ingredient('Buns', 2),
+    //         new Ingredient('Meat', 100)
+    //       ]
+    //     )
+    // ];
+    
+    private recipes: Recipe[] = [];
 
     constructor( private slService: ShoppingListService ){};
 
