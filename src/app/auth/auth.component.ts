@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { AuthService } from "./auth.service";
+import { Observable } from "rxjs";
+import { AuthResponseData, AuthService } from "./auth.service";
 
 @Component({
     selector: 'app-auth',
@@ -26,24 +27,31 @@ export class AuthComponent {
         const email = form.value.email;
         const password = form.value.password;
 
-        this.isLoading = true;
-        if( this.isLoginMode ){
+        // we want to change into Observable and use this variable to do subscribe()
+        let authObs: Observable<AuthResponseData>; 
 
+        this.isLoading = true;
+
+        if( this.isLoginMode ){
+            // Login - view auth.service
+            authObs = this.auth.login( email, password );// .subscribe(<MOVED>)
         } else {
-          this.auth.signup( email, password ).subscribe( 
+            // Sign Up - view auth service
+            authObs = this.auth.signup( email, password );// .subscribe(<MOVED>) 
+        }; 
+
+        // will be making all our subscribe calls instead of having everything inside of if-else
+        authObs.subscribe(
             resData => {
-                console.log(resData);
+                console.log( resData );
                 this.isLoading = false;
             }, errorMessage => {
-                console.log(errorMessage);
+                console.log( errorMessage );
                 this.error = errorMessage;
-                this.isLoading = false;
-                // switch( errorRes.error.error.message ){
-                //     case 'EMAIL_EXISTS':
-                //         this.error = 'this email ALREADY exists'
-                // }                             
-            });  
-        }; 
+                this.isLoading = false;                                          
+            }
+        );
+
         form.reset();
     };
 
