@@ -35,7 +35,7 @@ export class DataStorageService {
         return this.authService.user.pipe(
             take( 1 ), 
             exhaustMap(
-                // checking for auth for a specifc user
+                // adding auth for THAT specifc user
                 user => {
                     return this.http
                     .get<Recipe[]>('https://ng-course-recipe-book-e39b2-default-rtdb.firebaseio.com/recipes.json',
@@ -58,10 +58,13 @@ export class DataStorageService {
             })
         );
         // PREVIOUS CODE BELOW!
+    };
 
+};
+
+    // fetchRecipes(){
         // since we are now returning something ==> .subscribe() is not needed HERE! 
         // look into header.component.ts file ==> .onFetchData() function
-
         // return this.http
         //     .get<Recipe[]>(
         //         'https://ng-course-recipe-book-e39b2-default-rtdb.firebaseio.com/recipes.json'
@@ -86,6 +89,4 @@ export class DataStorageService {
         // MOVED to tap() above
         // this.recipeService.setRecipes( recipes ); // recipes - did not work because Angular/TypeScript needs to know the specific datatype passing thru
         // });
-    };
-
-};
+ // }
