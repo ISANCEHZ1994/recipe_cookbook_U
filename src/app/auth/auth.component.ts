@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { AuthResponseData, AuthService } from "./auth.service";
 
@@ -13,7 +14,7 @@ export class AuthComponent {
     isLoading = false;
     error: string = null;
 
-    constructor( private auth: AuthService ){}
+    constructor( private auth: AuthService, private router: Router ){}
 
     onSwitchMode(){
         this.isLoginMode = !this.isLoginMode;
@@ -41,10 +42,13 @@ export class AuthComponent {
         }; 
 
         // will be making all our subscribe calls instead of having everything inside of if-else
+        // NOTE: when we refresh the page - login information is lost..
         authObs.subscribe(
             resData => {
                 console.log( resData );
                 this.isLoading = false;
+                // after we login/sign up - we want to redirect to another page
+                this.router.navigate(['/recipes']);
             }, errorMessage => {
                 console.log( errorMessage );
                 this.error = errorMessage;

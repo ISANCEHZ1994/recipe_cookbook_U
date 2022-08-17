@@ -9,12 +9,15 @@
             <!-- <li><a href="#" (click)="onSelect('recipe')">Recipes</a></li> -->
             <!-- <li><a href="#" (click)="onSelect('shopping-list')">Shopping List</a></li> -->
             <!-- Using Router Link -->
-            <li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
-            <li routerLinkActive="active"><a routerLink="/auth">Authenticate</a></li>
+            <li routerLinkActive="active"><a routerLink="/recipes" *ngIf="isAuthenticated">Recipes</a></li>
+            <li routerLinkActive="active"><a routerLink="/auth" *ngIf="!isAuthenticated">Authenticate</a></li>
             <li routerLinkActive="active"><a routerLink="/shopping-list">Shopping List</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown" appDropdown>
+            <li *ngIf="isAuthenticated">
+                <a style="cursor: pointer;">Logout</a>
+            </li>
+            <li class="dropdown" appDropdown *ngIf="isAuthenticated">
                 <a 
                     style="cursor: pointer;"
                     class="dropdown-toggle"
