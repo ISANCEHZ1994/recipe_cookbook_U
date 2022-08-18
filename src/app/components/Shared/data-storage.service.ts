@@ -32,31 +32,22 @@ export class DataStorageService {
 
     fetchRecipes(){
         // if you see inside of auth.service - BehaviorSubject is now being used so we changed/use different functions to 
-        return this.authService.user.pipe(
-            take( 1 ), 
-            exhaustMap(
-                // adding auth for THAT specifc user
-                user => {
-                    return this.http
-                    .get<Recipe[]>('https://ng-course-recipe-book-e39b2-default-rtdb.firebaseio.com/recipes.json',
-                        {
-                           params: new HttpParams().set( 'auth', user.token )
+        // we also moved part of this code to auth-interceptor.service file!
+       return this.http
+            .get<Recipe[]>('https://ng-course-recipe-book-e39b2-default-rtdb.firebaseio.com/recipes.json')
+            .pipe( 
+                map( recipes => {
+                    return recipes.map( recipe => {
+                        return { 
+                            ...recipe, 
+                            ingredients: recipe.ingredients ? recipe.ingredients : [] 
                         }
-                    );
-                }
-            // first map from rxjs/operator
-            ), map( recipes => {
-                return recipes.map( recipe => {
-                    return { 
-                        ...recipe, 
-                        ingredients: recipe.ingredients ? recipe.ingredients : [] 
-                    }
-                });
-            }),
-            tap( recipes => {
-                this.recipeService.setRecipes( recipes );
-            })
-        );
+                    });
+                }),
+                tap( recipes => {
+                    this.recipeService.setRecipes( recipes );
+                })
+            );        
         // PREVIOUS CODE BELOW!
     };
 
