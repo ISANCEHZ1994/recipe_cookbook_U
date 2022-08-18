@@ -23,7 +23,6 @@ export class AuthInterceptorService implements HttpInterceptor {
             take(1),
             exhaustMap( user => {
         // ------ part of copied code ends here
-
                 // checking for the variable(user) inside of auth.service.ts 
                 if( !user ){
                     return next.handle( req );
