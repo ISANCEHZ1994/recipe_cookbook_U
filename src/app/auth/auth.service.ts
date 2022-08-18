@@ -71,20 +71,49 @@ export class AuthService {
         );
     };
 
+    autoLogin(){        
+        const userData: {
+            email:  string;
+            id:     string;
+            _token: string;
+            _tokenExpirationDate: Date;
+        } = JSON.parse( localStorage.getItem('userData') );
+        
+        if( !userData ){
+            // if its false-ish - we can return
+            return;
+        };
+
+        const loadedUser = new User(
+            userData.email,
+            userData.id,
+            userData._token,
+            new Date(userData._tokenExpirationDate)
+        );    
+        
+        if( loadedUser.token ){
+            this.user.next( loadedUser );
+        };
+        // autoLogin done - should be placed where application lifecycle runs early - app.component.ts file!
+    }; 
+
     logout(){
         this.user.next(null);
         this.router.navigate(['/auth']);
     };
 
     private handleAuthentication( 
-        email: string, 
+        email:  string, 
         userId: string, 
-        token: string, 
+        token:  string, 
         expiresIn: number 
     ){
         const expirationDate = new Date( new Date().getTime() + expiresIn * 1000 );
         const user = new User( email, userId, token, expirationDate ); 
         this.user.next( user );
+        // now if even if we refresh or close tab- the user will still be signed in        
+        localStorage.setItem('userData', JSON.stringify( user ));
+        // now if we check the dev tools - application - local storage - we can now see user information inside!
     };
 
     private handleError( errorRes: HttpErrorResponse ){
