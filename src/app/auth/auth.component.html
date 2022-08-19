@@ -4,7 +4,12 @@
             {{ error }}
         </div> -->
         <!-- we have replaced the above alert with a modal -->
-        <app-alert [message]="error" *ngIf="error"></app-alert>
+        <!-- <app-alert 
+            [message]="error" 
+            *ngIf="error" 
+            (close)="onHandleError()"
+        >
+        </app-alert> -->
         <div *ngIf="isLoading" style="text-align: center;">
             <app-loading-spinner ></app-loading-spinner>
         </div>
