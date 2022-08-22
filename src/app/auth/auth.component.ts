@@ -1,20 +1,30 @@
-import { Component } from "@angular/core";
+// import { Placeholder } from "@angular/compiler/src/i18n/i18n_ast";
+import { Component, ComponentFactory, ComponentFactoryResolver, OnDestroy, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { AlertComponent } from "app/components/Shared/alert/alert.component";
+import { PlaceholderDirective } from "app/components/Shared/placeholder/placeholder.directive";
+import { Observable, Subscription } from "rxjs";
 import { AuthResponseData, AuthService } from "./auth.service";
 
 @Component({
     selector: 'app-auth',
     templateUrl: './auth.component.html'
 })
-export class AuthComponent {
+export class AuthComponent implements OnDestroy {
 
     isLoginMode = true;
     isLoading = false;
     error: string = null;
+    @ViewChild( PlaceholderDirective ) alertHost: PlaceholderDirective;
 
-    constructor( private auth: AuthService, private router: Router ){}
+    private closeSub: Subscription;
+
+    constructor( 
+        private auth: AuthService, 
+        private router: Router, 
+        private compoFactoryResolver: ComponentFactoryResolver 
+    ){};
 
     onSwitchMode(){
         this.isLoginMode = !this.isLoginMode;
@@ -52,6 +62,7 @@ export class AuthComponent {
             }, errorMessage => {
                 console.log( errorMessage );
                 this.error = errorMessage;
+                this.showErrorAlert( errorMessage );
                 this.isLoading = false;                                          
             }
         );
@@ -63,8 +74,30 @@ export class AuthComponent {
         this.error = null;
     };
 
-    private showErrorAlert(){
+    private showErrorAlert( message: string ){
+        // const alertCmp = new AlertComponent();
+        const alertCmpFacotry = this.compoFactoryResolver.resolveComponentFactory( AlertComponent );
+        const hostViewContianerRef = this.alertHost.viewContainerRef;
+        // clear anything that might have been rendered there BEFORE
+        hostViewContianerRef.clear();
 
+        const componentRef = hostViewContianerRef.createComponent( alertCmpFacotry );
+
+        // the message can now be seen HOWEVER the alert/error message cannot close
+        // alert.component.ts => takes care of everything we already created for 
+        componentRef.instance.message = message;
+        this.closeSub = componentRef.instance.close.subscribe(
+            () => {
+                this.closeSub.unsubscribe();
+                hostViewContianerRef.clear();
+            }
+        );
     };
+
+    ngOnDestroy(): void {
+        if( this.closeSub ){
+            this.closeSub.unsubscribe();
+        }
+    }
 
 };
