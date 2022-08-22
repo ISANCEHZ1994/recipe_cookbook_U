@@ -5,17 +5,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
-import { RecipesComponent }      from './components/RecipeBook/recipes/recipes.component';
-import { RecipeListComponent }   from './components/RecipeBook/recipes/recipe-list/recipe-list.component';
-import { RecipeItemComponent }   from './components/RecipeBook/recipes/recipe-list/recipe-item/recipe-item.component';
-import { RecipeEditComponent }   from './components/RecipeBook/recipes/recipe-edit/recipe-edit.component';
-import { RecipeDetailComponent } from './components/RecipeBook/recipes/recipe-detail/recipe-detail.component';
 import { ShoppingEditComponent } from './components/ShoppingList/shopping-list/shopping-edit/shopping-edit.component';
 import { ShoppingListComponent } from './components/ShoppingList/shopping-list/shopping-list.component';
 import { HeaderComponent }       from './components/header/header.component';
 import { DropdownDirective }     from './components/Shared/dropdown.directive';
 import { ShoppingListService }   from './components/ShoppingList/shopping-list/shopping-list.service';
-import { RecipeStartComponent }  from './components/RecipeBook/recipes/recipe-start/recipe-start.component';
 import { AppRoutingModule }      from './app-routing.module';
 import { RecipeService } from './components/RecipeBook/recipes/recipe.service';
 import { AuthComponent } from './auth/auth.component';
@@ -23,20 +17,16 @@ import { LoadingSpinnerComponent } from './components/Shared/loading-spinner/loa
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AlertComponent } from './components/Shared/alert/alert.component';
 import { PlaceholderDirective } from './components/Shared/placeholder/placeholder.directive';
+import { RecipesModule } from './components/RecipeBook/recipes/recipes.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeItemComponent,
-    RecipeDetailComponent,
+    // RECIPE(S) ITEMS MOVED TO => recipes.module.ts   
     ShoppingEditComponent,
     ShoppingListComponent,
-    DropdownDirective,
-    RecipeStartComponent,
-    RecipeEditComponent, 
+    DropdownDirective,    
     AuthComponent,
     LoadingSpinnerComponent,
     AlertComponent,
@@ -47,7 +37,8 @@ import { PlaceholderDirective } from './components/Shared/placeholder/placeholde
     FormsModule, 
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    RecipesModule
   ],
   providers: [ 
     ShoppingListService, 
