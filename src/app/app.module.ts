@@ -1,15 +1,12 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent }     from './components/header/header.component';
-import { ShoppingListService } from './components/ShoppingList/shopping-list/shopping-list.service';
 import { AppRoutingModule }    from './app-routing.module';
-import { RecipeService } from './components/RecipeBook/recipes/recipe.service';
 import { AuthComponent } from './auth/auth.component';
-import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { RecipesModule } from './components/RecipeBook/recipes/recipes.module';
 import { ShoppingListModule } from './components/ShoppingList/shopping-list/shopping-list.module';
 import { SharedModule } from './components/Shared/shared.module';
@@ -40,13 +37,14 @@ import { SharedModule } from './components/Shared/shared.module';
     SharedModule
   ],
   providers: [ 
-    ShoppingListService, 
-    RecipeService, 
-    { 
-      provide: HTTP_INTERCEPTORS, 
-      useClass: AuthInterceptorService,
-      multi: true
-    }
+    // MOVED TO FILE => core.module.ts
+    // ShoppingListService, 
+    // RecipeService, 
+    // { 
+    //   provide: HTTP_INTERCEPTORS, 
+    //   useClass: AuthInterceptorService,
+    //   multi: true
+    // }
   ],
   bootstrap: [ AppComponent ],
   // to show error message in Auth Component HTML/TS
