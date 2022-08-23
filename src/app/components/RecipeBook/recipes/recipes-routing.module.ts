@@ -25,3 +25,4 @@ const routes: Routes = [
     exports: [ RouterModule ]
 })
 export class RecipesRoutingModule {};
+// now that this is done - we will use it in the newly created recipes.module - which is connected to the MAIN app.module

@@ -1,6 +1,7 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { NgModule }     from "@angular/core";
+import { FormsModule }  from "@angular/forms";
+import { RouterModule } from "@angular/router";
+import { SharedModule } from "app/components/Shared/shared.module";
 
 import { ShoppingEditComponent } from "./shopping-edit/shopping-edit.component";
 import { ShoppingListComponent } from "./shopping-list.component";
@@ -15,12 +16,12 @@ import { ShoppingListComponent } from "./shopping-list.component";
         ShoppingEditComponent,
         ShoppingListComponent,
     ],
-    imports: [ 
-        // CommonModule: unlocked ngFor and ngIf
-        CommonModule,
+    imports: [        
+        FormsModule,        
         RouterModule.forChild([
-            { path: 'shopping-list', component: ShoppingListComponent }
-        ])
+            { path: 'shopping-list', component: ShoppingListComponent },
+        ]), 
+        SharedModule
      ],
      // No need for exports because that was only needed before when we had a separate routing module (recipes-module)
      // exports: [  ]
