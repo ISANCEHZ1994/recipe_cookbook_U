@@ -1,12 +1,10 @@
-import { NgModule }         from '@angular/core';
-import { BrowserModule }    from '@angular/platform-browser';
+import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
-import { ShoppingEditComponent } from './components/ShoppingList/shopping-list/shopping-edit/shopping-edit.component';
-import { ShoppingListComponent } from './components/ShoppingList/shopping-list/shopping-list.component';
 import { HeaderComponent }       from './components/header/header.component';
 import { DropdownDirective }     from './components/Shared/dropdown.directive';
 import { ShoppingListService }   from './components/ShoppingList/shopping-list/shopping-list.service';
@@ -18,14 +16,14 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AlertComponent } from './components/Shared/alert/alert.component';
 import { PlaceholderDirective } from './components/Shared/placeholder/placeholder.directive';
 import { RecipesModule } from './components/RecipeBook/recipes/recipes.module';
+import { ShoppingListModule } from './components/ShoppingList/shopping-list/shopping-list.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     // RECIPE(S) ITEMS MOVED TO => recipes.module.ts   
-    ShoppingEditComponent,
-    ShoppingListComponent,
+    // SHOPPING  ITEMS MOVED TO => shopping-list.module.ts
     DropdownDirective,    
     AuthComponent,
     LoadingSpinnerComponent,
@@ -38,7 +36,9 @@ import { RecipesModule } from './components/RecipeBook/recipes/recipes.module';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    RecipesModule
+    // TWO New Modules that were created to change what was inside of app-routing.modules
+    RecipesModule,
+    ShoppingListModule
   ],
   providers: [ 
     ShoppingListService, 
