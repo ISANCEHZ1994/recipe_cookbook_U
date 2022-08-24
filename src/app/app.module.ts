@@ -1,21 +1,24 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AppComponent } from './app.component';
-import { HeaderComponent }     from './components/header/header.component';
-import { AppRoutingModule }    from './app-routing.module';
-import { AuthComponent } from './auth/auth.component';
-import { RecipesModule } from './components/RecipeBook/recipes/recipes.module';
+import { RecipesModule }    from './components/RecipeBook/recipes/recipes.module';
 import { ShoppingListModule } from './components/ShoppingList/shopping-list/shopping-list.module';
 import { SharedModule } from './components/Shared/shared.module';
+import { CoreModule } from './core.module';
+import { AuthModule } from './auth/auth.module';
+import { AppRoutingModule } from './app-routing.module';
+
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    AuthComponent,
+    // MOVED AuthComponent => auth.module.ts
+    // AuthComponent,
     // RECIPE(S) ITEMS MOVED TO => recipes.module.ts   
     // SHOPPING  ITEMS MOVED TO => shopping-list.module.ts     
     // SHARED ITEMS MOVED TO => shared.module.ts
@@ -26,7 +29,8 @@ import { SharedModule } from './components/Shared/shared.module';
   ],
   imports: [
     BrowserModule,
-    FormsModule, 
+    // FormsModule moved to auth.module     
+    AuthModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
@@ -34,22 +38,21 @@ import { SharedModule } from './components/Shared/shared.module';
     RecipesModule,
     ShoppingListModule,
     // and now new module added
-    SharedModule
-  ],
-  providers: [ 
-    // MOVED TO FILE => core.module.ts
+    SharedModule,
+    CoreModule
+  ], 
+    // providers MOVED TO FILE => core.module.ts
     // ShoppingListService, 
     // RecipeService, 
     // { 
     //   provide: HTTP_INTERCEPTORS, 
     //   useClass: AuthInterceptorService,
     //   multi: true
-    // }
-  ],
+    // }  
   bootstrap: [ AppComponent ],
   // to show error message in Auth Component HTML/TS
   // entryComponents: [
   //   AlertComponent
   // ]
 })
-export class AppModule { }
+export class AppModule {};
