@@ -7,6 +7,7 @@ import { RecipeService } from "../RecipeBook/recipes/recipe.service";
 import { Ingredient } from "./ingredient.model";
 import { AuthService } from "app/auth/auth.service";
 
+// Injectable providedIn: 'root' is another way to add this service into the app module Providers: []
 @Injectable({
     providedIn: 'root'
 })

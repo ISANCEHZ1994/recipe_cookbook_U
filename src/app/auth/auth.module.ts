@@ -8,7 +8,7 @@ import { AuthComponent } from "./auth.component";
 @NgModule({
     declarations: [
         AuthComponent
-    ],
+    ],   
     imports: [
         CommonModule,
         FormsModule,

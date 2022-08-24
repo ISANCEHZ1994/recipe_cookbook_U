@@ -1,6 +1,14 @@
+// Modules In Short: 
+// ** Angular analyzes NgModules to "understand" your application and its features (Angular doesn't automaticlly scan all files in your project)
+// ** Angular Modules define all building blocks your app uses: Components, Directives, Services
+// ** An app requires at least one module (AppModule) but may be split into muliptle Modules
+// ** Core Angluar features are included in Angular Modules (e.g. FormsModule) to load them ONLY when needed
+// ** You CANNOT use a feature/building block without including it in a module 
+
+// Below had all components that were used in the app however we moved and changed the names to make better use of the module capabilities
+
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { RecipesModule }    from './components/RecipeBook/recipes/recipes.module';
@@ -14,6 +22,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
+  // Declarations are an array of components, directives and pipes that you are using in the app
   declarations: [
     AppComponent,
     HeaderComponent,
@@ -21,19 +30,21 @@ import { HeaderComponent } from './components/header/header.component';
     // AuthComponent,
     // RECIPE(S) ITEMS MOVED TO => recipes.module.ts   
     // SHOPPING  ITEMS MOVED TO => shopping-list.module.ts     
-    // SHARED ITEMS MOVED TO => shared.module.ts
+    // SHARED    ITEMS MOVED TO => shared.module.ts
     // DropdownDirective,   
     // LoadingSpinnerComponent,
     // AlertComponent,
     // PlaceholderDirective
   ],
+  // ===> imports: allows you to import OTHER MODULES to split your app into multiple modules <===
   imports: [
-    BrowserModule,
-    // FormsModule moved to auth.module     
-    AuthModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
+    // We have modlues that ALREADY come with Angular
+    BrowserModule,   
     HttpClientModule,
+    // -- EVERYTHING ELSE BELOW IS CUSTOM MADE --
+    AppRoutingModule,
+     // FormsModule moved to auth.module along side with AuthComponent that used to be in declarations: 
+    AuthModule,
     // TWO New Modules that were created to change what was inside of app-routing.modules
     RecipesModule,
     ShoppingListModule,
@@ -41,6 +52,8 @@ import { HeaderComponent } from './components/header/header.component';
     SharedModule,
     CoreModule
   ], 
+  // ===> Providers are for all the SERVICES you want to provide <===
+  // another way to attach something into the providers - view file data-storage.service.ts
     // providers MOVED TO FILE => core.module.ts
     // ShoppingListService, 
     // RecipeService, 
@@ -49,8 +62,12 @@ import { HeaderComponent } from './components/header/header.component';
     //   useClass: AuthInterceptorService,
     //   multi: true
     // }  
+  // ===> Bootstrap is important to start APP - it defines which component is available right in the index.html file <===
   bootstrap: [ AppComponent ],
-  // to show error message in Auth Component HTML/TS
+  // ===> Entry Components is used for components you create in code - allows Angular to be aware of this component 
+  // when it need to be create the component programmatically
+  // in this case its to show error message in Auth Component HTML/TS
+
   // entryComponents: [
   //   AlertComponent
   // ]
