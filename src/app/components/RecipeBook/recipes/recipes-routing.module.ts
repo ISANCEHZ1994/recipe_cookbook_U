@@ -9,7 +9,7 @@ import { RecipeDetailComponent } from "./recipe-detail/recipe-detail.component";
 import { RecipesResolverService } from "./recipes-resolver.service";
 
 const routes: Routes = [
-    { path: 'recipes', 
+    { path: '', 
       canActivate: [AuthGuard], 
       component: RecipesComponent, 
       children: [
@@ -19,6 +19,10 @@ const routes: Routes = [
         { path: ':id/edit',  component: RecipeEditComponent } 
     ]},
 ];
+
+// with everything being done we are now going to add Lazy Loading - only load that specific component whenever the route is called
+// uses less memory and makes the entire app faster in general - changing the 'recipes' path to => ''
+// now we go to app-routing to really make Lazy Loading to work
 
 @NgModule({
     imports: [ RouterModule.forChild(routes) ],

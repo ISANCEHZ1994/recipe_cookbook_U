@@ -1,10 +1,15 @@
 import { NgModule }     from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { AuthComponent } from "./auth/auth.component";
+// C:\Users\isanchez\Desktop\Practice\AngularWork\cookbook-shoppinglist\src\app\components\RecipeBook\recipes\recipes.module.ts
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/recipes', pathMatch: 'full' },
+    // ===> We are now adding Lazy Loading here <===
+    { 
+        path: 'recipes', 
+        loadChildren: () => import( './components/RecipeBook/recipes/recipes.module' ).then( m => m.RecipesModule ) 
+    },
     // ======== [ MOVED TO RECIPES-ROUTING.MODULE ] ===========
     // { path: 'recipes', 
     //   canActivate: [AuthGuard], 
@@ -17,7 +22,8 @@ const appRoutes: Routes = [
     // ]},    
     // =========== [ MOVED TO SHOPPING-LIST.MODULE ] ===========
     // { path: 'shopping-list', component: ShoppingListComponent },
-    { path: 'auth',          component: AuthComponent }
+    // =========== [ MOVED TO AUTH.MODULE.TS ] ==================
+    // { path: 'auth',          component: AuthComponent }
 ];
 
 @NgModule({
