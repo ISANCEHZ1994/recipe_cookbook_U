@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { LoggingService } from 'app/logging.service';
 import { Subscription } from 'rxjs';
 import { Ingredient } from '../../Shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
@@ -14,7 +15,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   // recommended practice to store subscription in property => ingChangeSub
   private ingChangeSub: Subscription;
 
-  constructor( private slService: ShoppingListService ) {};
+  constructor( private slService: ShoppingListService, private logService: LoggingService ) {};
 
   ngOnInit(): void {
     this.ingredients = this.slService.getIngredients();
@@ -26,6 +27,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
         this.ingredients = ingredients;
       }
     );
+    this.logService.printLog("hello from shopping-list component - NgOnit")
   };
 
   ngOnDestroy(): void {
