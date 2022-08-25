@@ -5,12 +5,10 @@ import { SharedModule } from "app/components/Shared/shared.module";
 
 import { ShoppingEditComponent } from "./shopping-edit/shopping-edit.component";
 import { ShoppingListComponent } from "./shopping-list.component";
-
 // we CAN do it this way but its a small route not a big list like recipes-routing.module
 // const appRoutes: Routes = [
 //     { path: 'shopping-list', component: ShoppingListComponent }
 // ];
-
 @NgModule({
     declarations: [
         ShoppingEditComponent,
@@ -28,5 +26,4 @@ import { ShoppingListComponent } from "./shopping-list.component";
      // exports: [  ]
 })
 export class ShoppingListModule {};
-
 // now that we are done creating this module - it should be added 

@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/recipes', pathMatch: 'full' },
@@ -31,9 +31,9 @@ const appRoutes: Routes = [
     // =========== [ MOVED TO AUTH.MODULE.TS ] ==================
     // { path: 'auth',          component: AuthComponent }
 ];
-
 @NgModule({
-    imports: [ RouterModule.forRoot(appRoutes) ],
+    // we would like to optomize Lazy Loading EVEN MORE - we can tell Angular to have lazy loaded modules PRELOADED
+    imports: [ RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules }) ],
     exports: [ RouterModule ]
 })
 export class AppRoutingModule {};
