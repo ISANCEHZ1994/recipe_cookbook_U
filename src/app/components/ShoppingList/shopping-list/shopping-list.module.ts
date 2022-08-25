@@ -19,7 +19,8 @@ import { ShoppingListComponent } from "./shopping-list.component";
     imports: [        
         FormsModule,        
         RouterModule.forChild([
-            { path: 'shopping-list', component: ShoppingListComponent },
+            // since we are using lazy loading path must be empty - the path is written in app-routing.module
+            { path: '', component: ShoppingListComponent },
         ]), 
         SharedModule
      ],
