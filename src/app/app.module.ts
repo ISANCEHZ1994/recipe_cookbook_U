@@ -26,10 +26,10 @@ import { HeaderComponent } from './components/header/header.component';
   declarations: [
     AppComponent,
     HeaderComponent,
-    // MOVED AuthComponent => auth.module.ts
-    // RECIPE(S) ITEMS MOVED TO => recipes.module.ts   
-    // SHOPPING  ITEMS MOVED TO => shopping-list.module.ts     
-    // SHARED/BELOW ITEMS MOVED TO => shared.module.ts
+    // MOVED AuthComponent          => auth.module.ts
+    // RECIPE(S) ITEMS MOVED TO     => recipes.module.ts   
+    // SHOPPING  ITEMS MOVED TO     => shopping-list.module.ts     
+    // SHARED/BELOW ITEMS MOVED TO  => shared.module.ts
     // DropdownDirective,   
     // LoadingSpinnerComponent,
     // AlertComponent,
