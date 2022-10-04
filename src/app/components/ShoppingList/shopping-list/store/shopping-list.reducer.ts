@@ -3,8 +3,10 @@
 // we will need to use something to help mangage the state better
 
 // our service - shopping-list.service.ts will be replaced with this file!
-import { Action } from "@ngrx/store";
+import { Action } from "@ngrx/store"; // no longer need
 import { Ingredient } from "app/components/Shared/ingredient.model";
+import { ADD_INGREDIENT } from "./shopping-list.actions";
+import { AddIngredient } from "./shopping-list.actions";
 
 const initalState = {
     ingredients: [
@@ -13,13 +15,13 @@ const initalState = {
     ]
 };
 
-export function shoppingListReducer( state = initalState, action: Action ){
+export function shoppingListReducer( state = initalState, action: AddIngredient ){
 
     // possibly for later! 
     // const { type, payload } = action;
 
     switch( action.type ){
-        case 'ADD_INGREDIENT': 
+        case ADD_INGREDIENT: 
             // below would be completely WRONG! state changes with NgRx always have to be IMMUTABLE
             // meaning we can not edit the existing or previous state
             // ===> return state.ingreidents.push()
@@ -29,7 +31,7 @@ export function shoppingListReducer( state = initalState, action: Action ){
                 ...state, // techinally you don't have to add it because there is only one item in the state but REALLY good practice!
                 ingredients: [ // remember - the item we are changing is the ingredients array
                     ...state.ingredients,
-                    action  
+                    action.payload  
                 ]
             };
         default:

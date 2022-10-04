@@ -10,6 +10,9 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+// now that we created both reducer and actions (store) for shopping-list we want to include it into our app
+// StoreModule helps with setting up application-wide @ngrx/store
+import { StoreModule } from '@ngrx/store'; 
 
 import { RecipesModule }    from './components/RecipeBook/recipes/recipes.module';
 import { ShoppingListModule } from './components/ShoppingList/shopping-list/shopping-list.module';
@@ -20,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
+import { shoppingListReducer } from './components/ShoppingList/shopping-list/store/shopping-list.reducer';
 
 @NgModule({
   // Declarations are an array of components, directives and pipes that you are using in the app
@@ -42,6 +46,13 @@ import { HeaderComponent } from './components/header/header.component';
     HttpClientModule,
     // -- EVERYTHING ELSE BELOW IS CUSTOM MADE --
     AppRoutingModule,
+
+    // we need to tell NgRx what makes up our store which reducers are involved - use forRoot()
+    StoreModule.forRoot({// we will pass a so-called action reducer map
+      // the key name (this case <shoppingList:> should be descriptive about which feature of the app this reducer belongs to )
+      shoppingList: shoppingListReducer
+    }),
+    
      // FormsModule moved to auth.module along side with AuthComponent that used to be in declarations: 
     AuthModule,
     // TWO New Modules that were created to change what was inside of app-routing.modules
@@ -49,7 +60,7 @@ import { HeaderComponent } from './components/header/header.component';
     ShoppingListModule,
     // and now new module added
     SharedModule,
-    CoreModule
+    CoreModule    
   ], 
   // ===> Providers are for all the SERVICES you want to provide <===
   // another way to attach something into the providers - view file data-storage.service.ts
