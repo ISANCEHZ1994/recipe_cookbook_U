@@ -24,9 +24,6 @@ import { PlaceholderDirective } from "./placeholder/placeholder.directive";
         DropdownDirective,
         CommonModule
     ],
-    entryComponents: [
-        AlertComponent
-    ],
     providers: [
         LoggingService
     ]
