@@ -50,9 +50,10 @@ import { shoppingListReducer } from './components/ShoppingList/shopping-list/sto
     // we need to tell NgRx what makes up our store which reducers are involved - use forRoot()
     StoreModule.forRoot({// we will pass a so-called action reducer map
       // the key name (this case <shoppingList:> should be descriptive about which feature of the app this reducer belongs to )
-      shoppingList: shoppingListReducer
+      shoppingList: shoppingListReducer,
+      // you can also later add other reducers right here as well so that everything is made to be
     }),
-    
+
      // FormsModule moved to auth.module along side with AuthComponent that used to be in declarations: 
     AuthModule,
     // TWO New Modules that were created to change what was inside of app-routing.modules

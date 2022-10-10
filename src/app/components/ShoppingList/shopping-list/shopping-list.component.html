@@ -13,7 +13,7 @@
             <a  
                 class="list-group-item" 
                 style="cursor: pointer;"
-                *ngFor="let ingredient of ingredients; let i = index"
+                *ngFor="let ingredient of ( ingredients | async ).ingredients; let i = index"
                 (click)="onEditItem(i)"
             >
             <!-- now when we click on an ingredient below we can now see it in the inputs and change the ammount or name -->
