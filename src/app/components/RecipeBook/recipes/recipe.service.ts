@@ -1,9 +1,11 @@
 import { Injectable, EventEmitter } from "@angular/core";
 import { Subject } from "rxjs";
+import { Store } from "@ngrx/store";
 
 import { Recipe } from "./recipe.model";
-import { Ingredient } from "app/components/Shared/ingredient.model";
-import { ShoppingListService } from "app/components/ShoppingList/shopping-list/shopping-list.service";
+import { Ingredient } from "../../Shared/ingredient.model";
+import { ShoppingListService } from "../../ShoppingList/shopping-list/shopping-list.service";
+import * as ShoppingListActions from "../../ShoppingList/shopping-list/store/shopping-list.actions"
 
 @Injectable()
 export class RecipeService {
@@ -35,7 +37,12 @@ export class RecipeService {
     
     private recipes: Recipe[] = [];
 
-    constructor( private slService: ShoppingListService ){};
+    constructor( 
+      private slService: ShoppingListService,
+      // have to clear about what is inside the store - type definition should be same as 
+      // notes about what the <> brakets are doing are inside of shopping-list.component
+      private store: Store<{shoppingList: { ingredients: Ingredient[] }}> 
+    ){};
 
     setRecipes( recipes: Recipe[] ){
       this.recipes = recipes;
@@ -50,8 +57,13 @@ export class RecipeService {
         return this.recipes[index];
     };
 
+    // now we are using NgRx store - so instead of using slService (the shopping-list.service.ts) 
+    // should DISPATCH add ingredient actions
     addIngredientsToShoppingList( ingredients: Ingredient[] ){
-        this.slService.addIngredients( ingredients );
+        // this.slService.addIngredients( ingredients );
+        this.store.dispatch(
+          new ShoppingListActions.AddIngredients(ingredients)
+        );
     };
 
     addRecipe( recipe: Recipe ){

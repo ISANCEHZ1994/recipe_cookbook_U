@@ -3,10 +3,13 @@
 // we will need to use something to help mangage the state better
 
 // our service - shopping-list.service.ts will be replaced with this file!
-import { Action } from "@ngrx/store"; // no longer need
-import { Ingredient } from "app/components/Shared/ingredient.model";
+import { Ingredient } from '../../../Shared/ingredient.model';
 import { ADD_INGREDIENT } from "./shopping-list.actions";
+import { ADD_INGREDIENTS } from "./shopping-list.actions";
 import { AddIngredient } from "./shopping-list.actions";
+
+import * as ShoppingListActions from './shopping-list.actions';
+import { StateObservable } from '@ngrx/store';
 
 const initalState = {
     ingredients: [
@@ -15,13 +18,17 @@ const initalState = {
     ]
 };
 
-export function shoppingListReducer( state = initalState, action: AddIngredient ){
+export function shoppingListReducer( 
+    state = initalState, 
+    // AddIngredient - is only specific to that action so we must change to use multiple actions - go to shopping-list.action file
+    action: ShoppingListActions.ShoppingListActions
+){
 
     // possibly for later! 
     // const { type, payload } = action;
 
     switch( action.type ){
-        case ADD_INGREDIENT: 
+        case ShoppingListActions.ADD_INGREDIENT: 
             // below would be completely WRONG! state changes with NgRx always have to be IMMUTABLE
             // meaning we can not edit the existing or previous state
             // ===> return state.ingreidents.push()
@@ -33,7 +40,16 @@ export function shoppingListReducer( state = initalState, action: AddIngredient 
                     ...state.ingredients,
                     action.payload  
                 ]
-            };
+            }
+        case ShoppingListActions.ADD_INGREDIENTS:
+            return {
+                ...state,
+                ingredients: [
+                    ...state.ingredients,
+                    // check payload - we dont want a NESTED array hence the ...action.payload
+                    ...action.payload
+                ]
+            }
         default:
             return state;
     }

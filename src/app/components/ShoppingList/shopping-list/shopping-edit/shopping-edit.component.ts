@@ -6,10 +6,11 @@ import {
   OnDestroy 
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Ingredient } from 'app/components/Shared/ingredient.model';
+import { Ingredient } from '../../../Shared/ingredient.model';
 import { Subscription } from 'rxjs';
 import { ShoppingListService } from '../shopping-list.service';
 import { Store } from '@ngrx/store';
+import * as ShoppingListActions from '../store/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -30,8 +31,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   editMode = false;
   editedItemIndex: number;
+
   // remember that the item we are changing/editing is an Ingredient (model)
   editedItem: Ingredient;
+  
   // using information from shopping-edit.component.html
   @ViewChild('f', { static: false }) slForm: NgForm;
 
@@ -70,8 +73,17 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     const newIngredient = new Ingredient( value.name, value.amount ); 
     if( this.editMode ) {
       this.slService.updateIngredient( this.editedItemIndex, newIngredient );
-    } else {
-      this.slService.addIngredient( newIngredient );
+    } else {  
+      // this.slService.addIngredient( newIngredient );
+      // we are now DISPATCHING our ACTIONS
+      this.store.dispatch(
+        // UNDERSTAND THE FLOW of NGRX
+        // as soon as we add an ingredient 
+        // dispatch the action - can also see in the actions file (shopping-list.actions)
+        // to that storage - the NgRX store in the app.module.ts file .forRoot({})
+        // that store is aware of the reducers
+        new ShoppingListActions.AddIngredient( newIngredient )
+      );
     }
     this.editMode = false;
     form.reset(); 
