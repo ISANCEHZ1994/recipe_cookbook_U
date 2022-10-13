@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { Ingredient } from 'app/components/Shared/ingredient.model';
 import { Subscription } from 'rxjs';
 import { ShoppingListService } from '../shopping-list.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -34,7 +35,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   // using information from shopping-edit.component.html
   @ViewChild('f', { static: false }) slForm: NgForm;
 
-  constructor( private slService: ShoppingListService ) { };
+  constructor( 
+    private slService: ShoppingListService,
+    private store: Store
+  ) { };
 
   ngOnInit() {
     this.slService.startedEditing.subscribe(
