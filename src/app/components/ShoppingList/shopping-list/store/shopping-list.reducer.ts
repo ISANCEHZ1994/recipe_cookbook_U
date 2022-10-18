@@ -6,6 +6,8 @@
 import { Ingredient } from '../../../Shared/ingredient.model';
 import { ADD_INGREDIENT } from "./shopping-list.actions";
 import { ADD_INGREDIENTS } from "./shopping-list.actions";
+import { UPDATE_INGREDIENT } from './shopping-list.actions';
+import { DELETED_INGREDIENT } from './shopping-list.actions';
 import { AddIngredient } from "./shopping-list.actions";
 
 import * as ShoppingListActions from './shopping-list.actions';
@@ -28,7 +30,7 @@ export function shoppingListReducer(
     // const { type, payload } = action;
 
     switch( action.type ){
-        case ShoppingListActions.ADD_INGREDIENT: 
+        case ADD_INGREDIENT: 
             // below would be completely WRONG! state changes with NgRx always have to be IMMUTABLE
             // meaning we can not edit the existing or previous state
             // ===> return state.ingreidents.push()
@@ -40,8 +42,8 @@ export function shoppingListReducer(
                     ...state.ingredients,
                     action.payload  
                 ]
-            }
-        case ShoppingListActions.ADD_INGREDIENTS:
+            };
+        case ADD_INGREDIENTS:
             return {
                 ...state,
                 ingredients: [
@@ -49,7 +51,35 @@ export function shoppingListReducer(
                     // check payload - we dont want a NESTED array hence the ...action.payload
                     ...action.payload
                 ]
-            }
+            };
+        case UPDATE_INGREDIENT:
+            // below is to ENFORCE immutable logic - looks crazy but will prevent unexpected bugs 
+
+            // we want to get the specific ingreident that we want to change => [] accesses the index which is part of the payload
+            const ingredient = state.ingredients[action.payload.index];
+            // create a copy of the old ingredient and action.payload also has the ingredient
+            const updatedIngredient = {
+                // copying old properties
+                ...ingredient,
+                // adding new properties
+                ...action.payload.ingredient
+            };
+            // we need an array of old ingredients - techincally it will be a new array with the old data
+            const updatedIngredients = [...state.ingredients];
+            // overriding the exisitng element with the new on
+            updatedIngredients[action.payload.index] = updatedIngredient;
+            // now updatedIngredients is an array of ingreidients where we edited an ingreident
+            return {
+                ...state,
+                ingredients: updatedIngredients
+            };
+        case DELETED_INGREDIENT: 
+            return {
+                ...state,
+                ingredients: state.ingredients.filter( ( ing, ingIndex ) => {
+                    return ingIndex !== action.payload;
+                })
+            };
         default:
             return state;
     }
