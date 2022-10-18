@@ -66,7 +66,7 @@ export function shoppingListReducer(
             };
             // we need an array of old ingredients - techincally it will be a new array with the old data
             const updatedIngredients = [...state.ingredients];
-            // overriding the exisitng element with the new on
+            // overriding the exisitng element with the new one - NOTICE: using updatedIngredient variable
             updatedIngredients[action.payload.index] = updatedIngredient;
             // now updatedIngredients is an array of ingreidients where we edited an ingreident
             return {
@@ -75,7 +75,10 @@ export function shoppingListReducer(
             };
         case DELETED_INGREDIENT: 
             return {
+                // again copy of the old state
                 ...state,
+                // REMEMBER: filter will always return a new array!
+                
                 ingredients: state.ingredients.filter( ( ing, ingIndex ) => {
                     return ingIndex !== action.payload;
                 })

@@ -69,10 +69,14 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     
     // Switching to TD (Template-Driven) form so above is not needed anymore
     const value = form.value;
-    // we are getting the value.<VARIABLE> from HTML file
+    // we are getting the value.<VARIABLE-NAME> from HTML file
     const newIngredient = new Ingredient( value.name, value.amount ); 
     if( this.editMode ) {
-      this.slService.updateIngredient( this.editedItemIndex, newIngredient );
+      // Replaced with the store - using NgRx
+      // this.slService.updateIngredient( this.editedItemIndex, newIngredient );
+      this.store.dispatch(
+        new ShoppingListActions.UpdateIngredient({ index: this.editedItemIndex, ingredient: newIngredient })
+      ) 
     } else {  
       // this.slService.addIngredient( newIngredient );
       // we are now DISPATCHING our ACTIONS
@@ -96,7 +100,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   onDelete(){
     // that specfic item will be gone from the list
-    this.slService.deleteIngredient(this.editedItemIndex);
+    // Replacing with store - using NgRx
+    // this.slService.deleteIngredient(this.editedItemIndex);
+    this.store.dispatch(
+      new ShoppingListActions.DeleteIngredient(this.editedItemIndex)
+    );
     // might as well clear the inputs
     this.onClear();
   };
