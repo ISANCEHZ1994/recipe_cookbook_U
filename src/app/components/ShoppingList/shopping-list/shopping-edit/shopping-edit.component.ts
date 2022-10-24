@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { ShoppingListService } from '../shopping-list.service';
 import { Store } from '@ngrx/store';
 import * as ShoppingListActions from '../store/shopping-list.actions';
+import * as fromShoppingList from '../store/shopping-list.reducer'
 
 @Component({
   selector: 'app-shopping-edit',
@@ -40,16 +41,21 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   constructor( 
     private slService: ShoppingListService,
-    private store: Store
+    private store: Store<
+      fromShoppingList.AppState
+      // { shoppingList: { ingredients: Ingredient[] } }
+    >
   ) { };
 
   ngOnInit() {
+    // notice that we still use the Shopping List Service or slService!
+    // planning to change to use store - NgRx
     this.slService.startedEditing.subscribe(
         ( index: number ) => {
           this.editedItemIndex = index;
           this.editMode = true;
           this.editedItem = this.slService.getIngredient(index); 
-
+ 
           this.slForm.setValue({
             name:   this.editedItem.name,
             amount: this.editedItem.amount

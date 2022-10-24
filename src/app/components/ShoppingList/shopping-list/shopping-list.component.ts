@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { LoggingService } from 'app/logging.service';
+import { LoggingService } from '../../../logging.service';
 import { Ingredient } from '../../Shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
+import * as fromShoppingList from './store/shopping-list.reducer';
 
 @Component({
   selector: 'app-shopping-list',
@@ -24,13 +25,15 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     // so video shows an error on <:Store> how it was resolved was add genertic brakets
     
     // connecting our reducer/action/ngrx
-    private store: Store<{
+    private store: Store<
+      // we are now replacing with the interface inside of shopping-list.reducer.ts file
+      fromShoppingList.AppState
     // NOTE: make sure the {key} is the same name as the key: in app.module in this case ==> shoppingList: shoppingListReducer  
-      shoppingList: {
+      // shoppingList: {
         // now we need the key: to be the same as the state name inside of shopping-list.reducer
-        ingredients: Ingredient[] // which is going to be an array of ingredients
-      } 
-    }> 
+        // ingredients: Ingredient[] // which is going to be an array of ingredients
+      // } 
+    > 
   ) {};
 
   ngOnInit(): void {
@@ -70,6 +73,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   // function used inside of the shopping-list.component.html
   onEditItem(index: number){
     this.slService.startedEditing.next(index);
+    // using store to dispatch an action - using NgRx
+    
   }; 
 
   // here is where we implement our data from the shopping edit component.ts

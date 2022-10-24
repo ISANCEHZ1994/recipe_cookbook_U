@@ -6,13 +6,13 @@ import { Recipe } from "./recipe.model";
 import { Ingredient } from "../../Shared/ingredient.model";
 import { ShoppingListService } from "../../ShoppingList/shopping-list/shopping-list.service";
 import * as ShoppingListActions from "../../ShoppingList/shopping-list/store/shopping-list.actions"
+import * as fromShoppingList from '../../ShoppingList/shopping-list/store/shopping-list.reducer';
 
 @Injectable()
 export class RecipeService {
 
     recipeSelected = new Subject<Recipe>();
-    recipesChanged = new Subject<Recipe[]>();
-    
+    recipesChanged = new Subject<Recipe[]>();    
     // IN CASE: For dummy data
     // recipes: Recipe[] = [
     //     new Recipe(
@@ -33,15 +33,17 @@ export class RecipeService {
     //         new Ingredient('Meat', 100)
     //       ]
     //     )
-    // ];
-    
+    // ];    
     private recipes: Recipe[] = [];
 
     constructor( 
       private slService: ShoppingListService,
       // have to clear about what is inside the store - type definition should be same as 
       // notes about what the <> brakets are doing are inside of shopping-list.component
-      private store: Store<{shoppingList: { ingredients: Ingredient[] }}> 
+      private store: Store<
+        fromShoppingList.AppState
+        // { shoppingList: { ingredients: Ingredient[] }}
+      > 
     ){};
 
     setRecipes( recipes: Recipe[] ){

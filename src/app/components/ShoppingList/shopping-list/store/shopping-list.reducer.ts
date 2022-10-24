@@ -8,16 +8,32 @@ import { ADD_INGREDIENT } from "./shopping-list.actions";
 import { ADD_INGREDIENTS } from "./shopping-list.actions";
 import { UPDATE_INGREDIENT } from './shopping-list.actions';
 import { DELETED_INGREDIENT } from './shopping-list.actions';
-import { AddIngredient } from "./shopping-list.actions";
+// import { AddIngredient } from "./shopping-list.actions";
 
 import * as ShoppingListActions from './shopping-list.actions';
-import { StateObservable } from '@ngrx/store';
+// import { StateObservable } from '@ngrx/store';
 
-const initalState = {
+// with this interface - now we can go to other places where we used store and reference the AppState
+export interface AppState {    
+    shoppingList: State;
+};
+
+export interface State {
+    ingredients: Ingredient[];
+    editedIngredient: Ingredient;
+    editedIngredientIndex: Number
+};
+// we are now telling our state to be of type INTERFACE STATE above!
+const initalState: State = {
     ingredients: [
         new Ingredient('Apples', 5),
         new Ingredient('Tomatoes', 10)
-    ]
+    ],
+    // NOTE: since we are changing the state object - we must ensure that everything else has the same change where we IMPORT STATE..
+    // seems annoying to change everything tho so instead we'll create an interface above so that state is easier to manage everywhere else
+    editedIngredient: null, // null will represent the type INGREIDENT - state doesnt accept TYPES so null instead
+    editedIngredientIndex: -1 // -1 will represent the type NUMBER - state doesnt accept TYPES so negative 1 instead
+    // its -1 because if we make it 0 - it will think we mean the 0 index
 };
 
 export function shoppingListReducer( 
