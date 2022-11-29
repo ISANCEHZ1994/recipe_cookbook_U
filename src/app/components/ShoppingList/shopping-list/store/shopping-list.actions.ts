@@ -6,6 +6,8 @@ export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const ADD_INGREDIENTS = "ADD_INGREDIENTS";
 export const UPDATE_INGREDIENT = "UPDATE_INGREDIENT";
 export const DELETED_INGREDIENT = "DELETED_INGREDIENT";
+export const START_EDIT = "START_EDIT";
+export const STOP_EDIT = "STOP_EDIT";
 
 // for this actions file we are replicating what is created inside of shopping-list.service
 // implements the action which is an INTERFACE not itself an object
@@ -27,15 +29,30 @@ export class AddIngredients implements Action {
 
 export class UpdateIngredient implements Action {
     readonly type = UPDATE_INGREDIENT;
-    constructor( public payload: {index: number, ingredient: Ingredient} ){};
+    constructor( 
+        public payload: Ingredient
+        // No longer needed because we created start edit and stop edit to have the index
+        // { index: number, ingredient: Ingredient } 
+    ){};
 };
 
 export class DeleteIngredient implements Action {
     readonly type = DELETED_INGREDIENT;
-    constructor( public payload: number ){};
+    // also no longer needed because again we have start edit and stop edit getting our index for us
+    // constructor( public payload: number ){};
+};
+
+export class StartEdit implements Action {
+    readonly type = START_EDIT;
+    // we need to know exactly which ingredient we are editing
+    constructor( public payload: number ){}
+};
+
+export class StopEdit implements Action {
+    readonly type = STOP_EDIT;
 };
 
 // so that we can export both actions and not ONE specific - so that we can use Multiple Actions
 // also speificlly using TypeScript feature basically saying what the type of action(s) that ShoppingListActions are
-export type ShoppingListActions = AddIngredient | AddIngredients | UpdateIngredient | DeleteIngredient;
+export type ShoppingListActions = AddIngredient | AddIngredients | UpdateIngredient | DeleteIngredient | StartEdit | StopEdit;
 // should also be changed in other places as well such as the reducer

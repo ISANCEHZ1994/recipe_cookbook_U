@@ -8,6 +8,8 @@ import { ADD_INGREDIENT } from "./shopping-list.actions";
 import { ADD_INGREDIENTS } from "./shopping-list.actions";
 import { UPDATE_INGREDIENT } from './shopping-list.actions';
 import { DELETED_INGREDIENT } from './shopping-list.actions';
+import { START_EDIT } from './shopping-list.actions';
+import { STOP_EDIT } from './shopping-list.actions';
 // import { AddIngredient } from "./shopping-list.actions";
 
 import * as ShoppingListActions from './shopping-list.actions';
@@ -21,7 +23,7 @@ export interface AppState {
 export interface State {
     ingredients: Ingredient[];
     editedIngredient: Ingredient;
-    editedIngredientIndex: Number
+    editedIngredientIndex: number
 };
 // we are now telling our state to be of type INTERFACE STATE above!
 const initalState: State = {
@@ -41,10 +43,8 @@ export function shoppingListReducer(
     // AddIngredient - is only specific to that action so we must change to use multiple actions - go to shopping-list.action file
     action: ShoppingListActions.ShoppingListActions
 ){
-
     // possibly for later! 
     // const { type, payload } = action;
-
     switch( action.type ){
         case ADD_INGREDIENT: 
             // below would be completely WRONG! state changes with NgRx always have to be IMMUTABLE
@@ -72,22 +72,24 @@ export function shoppingListReducer(
             // below is to ENFORCE immutable logic - looks crazy but will prevent unexpected bugs 
 
             // we want to get the specific ingreident that we want to change => [] accesses the index which is part of the payload
-            const ingredient = state.ingredients[action.payload.index];
+            const ingredient = state.ingredients[state.editedIngredientIndex];
             // create a copy of the old ingredient and action.payload also has the ingredient
             const updatedIngredient = {
                 // copying old properties
                 ...ingredient,
                 // adding new properties
-                ...action.payload.ingredient
+                ...action.payload
             };
             // we need an array of old ingredients - techincally it will be a new array with the old data
             const updatedIngredients = [...state.ingredients];
             // overriding the exisitng element with the new one - NOTICE: using updatedIngredient variable
-            updatedIngredients[action.payload.index] = updatedIngredient;
+            updatedIngredients[state.editedIngredientIndex] = updatedIngredient;
             // now updatedIngredients is an array of ingreidients where we edited an ingreident
             return {
                 ...state,
-                ingredients: updatedIngredients
+                ingredients: updatedIngredients,
+                editedIngredient: null,
+                editedIngredientIndex: -1
             };
         case DELETED_INGREDIENT: 
             return {
@@ -96,8 +98,20 @@ export function shoppingListReducer(
                 // REMEMBER: filter will always return a new array!
                 
                 ingredients: state.ingredients.filter( ( ing, ingIndex ) => {
-                    return ingIndex !== action.payload;
+                    return ingIndex !== state.editedIngredientIndex;
                 })
+            };
+        case START_EDIT:
+            return {
+                ...state,
+                editedIngredientIndex: action.payload,
+                editedIngredient: { ...state.ingredients[action.payload] }
+            };
+        case STOP_EDIT:  
+            return {
+                ...state,
+                editedIngredient: null,
+                editedIngredientIndex: -1
             };
         default:
             return state;

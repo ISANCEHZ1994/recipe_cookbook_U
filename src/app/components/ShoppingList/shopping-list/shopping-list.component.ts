@@ -6,6 +6,7 @@ import { LoggingService } from '../../../logging.service';
 import { Ingredient } from '../../Shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
 import * as fromShoppingList from './store/shopping-list.reducer';
+import * as ShoppingListActions from './store/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-list',
@@ -72,9 +73,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   // related to the startedEditing variable inside of the shopping-list.service
   // function used inside of the shopping-list.component.html
   onEditItem(index: number){
-    this.slService.startedEditing.next(index);
+    // this.slService.startedEditing.next(index);
     // using store to dispatch an action - using NgRx
-    
+    this.store.dispatch( new ShoppingListActions.StartEdit(index) )
+    // remember that in the shopping-list actions we made StartEdit require a payload
   }; 
 
   // here is where we implement our data from the shopping edit component.ts
