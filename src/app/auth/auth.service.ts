@@ -123,6 +123,7 @@ export class AuthService {
         expiresIn: number 
     ){
         const expirationDate = new Date( new Date().getTime() + expiresIn * 1000 );
+        // user needs to be stored inside of NgRx..check auth/store/auth.reducer.ts
         const user = new User( email, userId, token, expirationDate ); 
         this.user.next( user );
         this.autoLogout( expiresIn * 1000 );
