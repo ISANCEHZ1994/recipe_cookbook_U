@@ -23,7 +23,9 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { shoppingListReducer } from './components/ShoppingList/shopping-list/store/shopping-list.reducer';
+// import { shoppingListReducer } from './components/ShoppingList/shopping-list/store/shopping-list.reducer';
+// import { authReducer } from './auth/store/auth.reducer';
+import * as fromApp from './components/Store/app.reducer';
 
 @NgModule({
   // Declarations are an array of components, directives and pipes that you are using in the app
@@ -48,11 +50,18 @@ import { shoppingListReducer } from './components/ShoppingList/shopping-list/sto
     AppRoutingModule,
 
     // we need to tell NgRx what makes up our store which reducers are involved - use forRoot()
-    StoreModule.forRoot({// we will pass a so-called action reducer map
-      // the key name (this case <shoppingList:> should be descriptive about which feature of the app this reducer belongs to )
-      shoppingList: shoppingListReducer,
-      // you can also later add other reducers right here as well so that everything is made to be
-    }),
+    // NOTE: we are now changing - have all combined Reducers in one place for better management so object no longer needed
+    StoreModule.forRoot(
+      fromApp.addReducer
+      /** {
+       * we will pass a so-called action reducer map
+       * the key name (this case <shoppingList:> should be descriptive about which feature of the app this reducer belongs to )
+       *  shoppingList: shoppingListReducer,
+            auth: authReducer
+        // you can also later add other reducers right here as well so that everything is made to be
+       } 
+       * **/  
+    ),
 
      // FormsModule moved to auth.module along side with AuthComponent that used to be in declarations: 
     AuthModule,

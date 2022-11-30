@@ -4,9 +4,10 @@ import { Store } from '@ngrx/store';
 
 import { LoggingService } from '../../../logging.service';
 import { Ingredient } from '../../Shared/ingredient.model';
-import { ShoppingListService } from './shopping-list.service';
-import * as fromShoppingList from './store/shopping-list.reducer';
+// import { ShoppingListService } from './shopping-list.service';
+// import * as fromShoppingList from './store/shopping-list.reducer';
 import * as ShoppingListActions from './store/shopping-list.actions';
+import * as fromApp from '../../Store/app.reducer';
 
 @Component({
   selector: 'app-shopping-list',
@@ -21,19 +22,14 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   private ingChangeSub: Subscription;
 
   constructor( 
-    private slService: ShoppingListService, 
+    // private slService: ShoppingListService, 
     private logService: LoggingService,
     // so video shows an error on <:Store> how it was resolved was add genertic brakets
     
     // connecting our reducer/action/ngrx
-    private store: Store<
+    private store: Store<    
       // we are now replacing with the interface inside of shopping-list.reducer.ts file
-      fromShoppingList.AppState
-    // NOTE: make sure the {key} is the same name as the key: in app.module in this case ==> shoppingList: shoppingListReducer  
-      // shoppingList: {
-        // now we need the key: to be the same as the state name inside of shopping-list.reducer
-        // ingredients: Ingredient[] // which is going to be an array of ingredients
-      // } 
+      fromApp.AppState // NOTE: we are replacing everything with the Root Store! - we now have access to all other states included
     > 
   ) {};
 

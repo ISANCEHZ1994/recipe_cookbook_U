@@ -6,7 +6,8 @@ import { Recipe } from "./recipe.model";
 import { Ingredient } from "../../Shared/ingredient.model";
 import { ShoppingListService } from "../../ShoppingList/shopping-list/shopping-list.service";
 import * as ShoppingListActions from "../../ShoppingList/shopping-list/store/shopping-list.actions"
-import * as fromShoppingList from '../../ShoppingList/shopping-list/store/shopping-list.reducer';
+// import * as fromShoppingList from '../../ShoppingList/shopping-list/store/shopping-list.reducer';
+import * as fromApp from '../../Store/app.reducer';
 
 @Injectable()
 export class RecipeService {
@@ -41,7 +42,7 @@ export class RecipeService {
       // have to clear about what is inside the store - type definition should be same as 
       // notes about what the <> brakets are doing are inside of shopping-list.component
       private store: Store<
-        fromShoppingList.AppState
+        fromApp.AppState // replaced fromShoppingList => fromApp
         // { shoppingList: { ingredients: Ingredient[] }}
       > 
     ){};
