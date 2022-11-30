@@ -70,7 +70,6 @@ export function shoppingListReducer(
             };
         case UPDATE_INGREDIENT:
             // below is to ENFORCE immutable logic - looks crazy but will prevent unexpected bugs 
-
             // we want to get the specific ingreident that we want to change => [] accesses the index which is part of the payload
             const ingredient = state.ingredients[state.editedIngredientIndex];
             // create a copy of the old ingredient and action.payload also has the ingredient

@@ -1,6 +1,7 @@
 // import { EventEmitter } from "@angular/core";
+// Techincally we aren't even using this because we switched everything to NgRx
 import { Subject } from "rxjs";
-import { Ingredient } from "app/components/Shared/ingredient.model";
+import { Ingredient } from "../../Shared/ingredient.model";
 
 export class ShoppingListService{
     // we are replacing EventEmitter with Subject
